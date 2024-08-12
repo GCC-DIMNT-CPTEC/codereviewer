@@ -42,7 +42,7 @@ class RuleValidator_XML_1(RuleValidator_XML):
                 ret_bool = False
 
         if not ret_bool:
-            ret = f'Error rule {self.description}\n'
+            ret = f'Error rule  {word} {self.description}\n'
 
         return ret
 

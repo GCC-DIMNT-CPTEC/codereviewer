@@ -1,42 +1,53 @@
-# codereviewer
-Tool for automated Fortran Code Review based on GCC rules
-Version 0.1.0 
+# Code Reviewer (WEB)
 
-Language used: Python
+A codereviewer for fortran code analyses rule compliances.
 
-Programming paradigm -Object-oriented programming (OOP)
-
-
-> codereviewer
-     README.md
-     LICENSE
-     src/
-     tests/
-     Makefile
-     requirements.txt
-
-### History
-Version 0.1.0 - initial version
+```
+fortran-rule-checker-webapp
+├── src
+│   ├── app.py               # Main entry point 
+│   ├── static
+│   │   └── styles.css       # CSS styles  
+│   ├── templates
+│   │   └── index.html       # Main HTML template
+├── requirements.txt         # Project dependencies
+└── README.md                # Documentation for the project
+```
 
 
-### Installation instructions
+## VirtuaL Enviroment
+```bash
+ $ python3 -m venv VenvPythonWeb
+ $ source VenvPythonWeb/bin/activate
+```
 
-- Check for java installed (default-jre). If not installed: 
-`sudo apt install default-jre`
+## Running in terminal
 
-- Create and activate a virtual env: 
-~~~
-python3 -m venv .venv
-source .venv/bin/activate
-~~~
+```bash
+   $python3 app.py
+```
 
-- Install requirements:
-~~~
-make init
-~~~
+## Installing requirements: 
 
-- Test
+  - fparser
+```bash
+   $pip install fparser
+```
+  - flask
+```bash
+   $pip install flask
+```
 
-~~~
-make test
-~~~
+### requirements web server to flask
+
+```bash
+   $pip install gunicorn
+```
+
+```bash
+   $sudo apt update
+   $sudo apt install nginx
+```
+
+
+

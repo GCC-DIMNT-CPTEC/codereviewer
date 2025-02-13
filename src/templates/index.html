@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Reviewer</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/codereviewer_128.jpg') }}" type="image/jpg">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("upload-form");
+            const fileInput = document.getElementById("file");
+            const maxSize = 500 * 1024; // 2 MB
+
+            form.addEventListener("submit", function (event) {
+                const file = fileInput.files[0];
+                if (file && file.size > maxSize) {
+                    alert("File is too large. Maximum file size is 500 KB.");
+                    event.preventDefault();
+                }
+            });
+            const downloadButton = document.querySelector(".button");
+            downloadButton.addEventListener("click", async (event) => {
+                event.preventDefault();
+                try {
+                    const response = await fetch("/download_report");
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        alert(errorData.error);
+                    } else {
+                        const blob = await response.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement("a");
+                        a.style.display = "none";
+                        a.href = url;
+                        a.download = "analyzer_report.json";
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                    }
+                } catch (error) {
+                    alert("An error occurred while downloading the report.");
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <div class="container">
+        <img src="{{ url_for('static', filename='images/codereviewer_512.jpg') }}" width="70px" height="auto"
+            title="fortran code reviewer" alt="Fortran Code Reviewer">
+        <h1>Code Reviewer</h1>
+        <form id="upload-form" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="file" accept=".f90,.f95,.f03,.f08,.f,.for,.f77">
+            <label id="fparser-select" for="fortran_version">fParser:</label>
+            <select name="fortran_version" id="fortran-version">
+                <option value="f2003">Fortran 2003</option>
+                <option value="f2008">Fortran 2008</option>
+                <option value="f2018">Fortran 2018</option>
+            </select>
+            <button title="Click to analyze the code" type="submit">Analyze</button>
+        </form>
+
+        <h2>Analysis Report</h2>
+        <pre id="report"></pre>
+        <a href="/download_report" class="button">Download Report</a>
+    </div>
+
+    <div class="container_footer">
+        <p>&copy; 2025 Code Reviewer.</p>
+    </div>
+
+    <!-- <footer>
+        <p>&copy; 2025 Code Reviewer.</p>
+    </footer> -->
+
+
+    <script>
+        // Exibe o relatório retornado pela API
+        document.querySelector("#upload-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const response = await fetch("/", {
+                method: "POST",
+                body: formData,
+            });
+            const report = await response.json();
+            document.getElementById("report").textContent = JSON.stringify(report, null, 4);
+        });
+    </script>
+</body>
+
+</html>

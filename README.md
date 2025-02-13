@@ -38,7 +38,7 @@ fortran-rule-checker-webapp
    $pip install flask
 ```
 
-### requirements web server to flask
+### Requirements web server to flask
 
 ```bash
    $pip install gunicorn
@@ -48,6 +48,11 @@ fortran-rule-checker-webapp
    $sudo apt update
    $sudo apt install nginx
 ```
+### Installing all requirements
 
+```bash
+cd src/
+pip install -r ../requirements.txt
+```
 
 

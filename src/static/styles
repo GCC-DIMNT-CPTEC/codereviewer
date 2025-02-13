@@ -1,0 +1,169 @@
+/* Define a fonte padrão e o fundo da página */
+body {
+    font-family: Arial, sans-serif;
+    /* Arial é uma fonte padrão e amplamente suportada */
+    background-color: #f4f4f9;
+    /* Cor de fundo clara */
+    color: #333;
+    /* Cor do texto */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+/* Estilo do contêiner principal */
+.container {
+    background-color: #fff;
+    /* Fundo branco */
+    padding: 25px;
+    border-radius: 8px;
+    /* Bordas arredondadas */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Sombra leve */
+    width: 70%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.button {
+    display: inline-block;
+    padding: 3px 15px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #555b61;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
+}
+
+.button:hover {
+    background-color: #404447;
+}
+
+/* #upload-form {
+    flex-direction: column;
+    align-items: center;
+} */
+
+#fparser-select {
+    font-size: 14px;
+
+    /*font-weight: bold;*/
+    color: #000000;
+}
+
+
+/* Estiliza o botão "Browse File" */
+#custom-browse-button {
+    padding: 10px 20px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+#custom-browse-button:hover {
+    background-color: #007B8C;
+}
+
+/* Estilo do título principal */
+h1 {
+    margin-bottom: 20px;
+    /*color: #007bff;*/
+    color: #555b61;
+    /* Cor azul */
+}
+
+/* Estilo do formulário */
+form {
+    margin-bottom: 20px;
+}
+
+/* Estilo do input de arquivo */
+input[type="file"] {
+    margin-bottom: 10px;
+}
+
+/* Estilo do botão */
+button {
+    /*background-color: #007bff;*/
+    background-color: #555b61;
+
+    /* Fundo azul */
+    color: #fff;
+    /* Texto branco */
+    border: none;
+    padding: 3px 15px;
+    border-radius: 5px;
+    /* Bordas arredondadas */
+    cursor: pointer;
+    font-size: 13px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
+}
+
+/* Estilo do botão ao passar o mouse */
+button:hover {
+    /*background-color: #0056b3;*/
+    background-color: #404447;
+
+    /* Fundo azul escuro */
+}
+
+/* Estilo do subtítulo */
+h2 {
+    margin-top: 20px;
+    /*color: #007bff;*/
+    color: #555b61;
+    font-size: 15px;
+
+    /* Cor azul */
+}
+
+footer {
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #e7e7e7;
+}
+
+footer p {
+    margin: 0;
+    color: #777;
+}
+
+/* Estilo do relatório */
+pre {
+    background-color: #f4f4f9;
+    /* Fundo claro */
+    padding: 10px;
+    border-radius: 5px;
+    /* Bordas arredondadas */
+    text-align: left;
+    white-space: pre-wrap;
+    /* Quebra de linha automática */
+    word-wrap: break-word;
+    /* Quebra de palavra */
+    max-height: 300px;
+    overflow-y: auto;
+    /* Rolagem vertical */
+    border: 1px solid #ddd;
+    /* Borda cinza clara */
+}

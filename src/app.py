@@ -1,20 +1,41 @@
 import os
+import uuid
 from flask import Flask, request, render_template, jsonify, send_file, after_this_request
 #from flask_wtf.csrf import CSRFProtect
 from fparser.common.readfortran import FortranStringReader
 from fparser.two.parser import ParserFactory
 import json
 import re
+
+from werkzeug.utils import secure_filename
+import magic
 import rules
 
 
 app = Flask(__name__, template_folder='templates')
 #app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', '0a8c0962d7dcb75977790884b868560c6f5f95dbf44b6d75e920d32d89bd7662')
 #csrf = CSRFProtect(app)
-
+app.config['UPLOAD_EXTENSIONS'] = ['.f90', '.f95', '.f03', '.f08', '.f', '.for', '.f77']
 #app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024  # 1 MB
 app.config['PREFERRED_URL_SCHEME'] = 'https'
 app.config['MAX_CONTENT_LENGTH'] = 500 * 1024  # 512 kbytes
+
+
+# Security - configurations for file upload
+#
+UPLOAD_FOLDER = '~/temp/uploads'
+ALLOWED_EXTENSIONS = {'f90', 'f95', 'f03', 'f08', 'f', 'for', 'f77'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+def allowed_mime_type(file):
+    mime = magic.Magic(mime=True)
+    mime_type = mime.from_buffer(file.read(1024))
+    file.seek(0)  # Reset the file pointer to the beginning
+    return mime_type in {'text/plain', 'application/octet-stream'}
+#
 
 class Analyzer:
     def __init__(self):
@@ -113,6 +134,16 @@ def index():
         extension_error = rules.check_file_extension(file.filename)
         if extension_error:
             return jsonify({"error": extension_error}), 400
+        # Security - check if file is allowed
+        if not allowed_mime_type(file):
+            return jsonify({"error": "Invalid file type"}), 400
+
+        # Security - save file in secure way
+        # filename = secure_filename(file.filename)
+        # unique_filename = f"{uuid.uuid4().hex}_{filename}"
+        # file_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+        # file.save(file_path)
+        # with open(file_path, "rb") as file:
 
         try:
             fortran_code = file.read().decode("utf-8")

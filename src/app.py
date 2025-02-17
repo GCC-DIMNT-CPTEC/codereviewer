@@ -7,7 +7,7 @@ from fparser.two.parser import ParserFactory
 import json
 import re
 
-from werkzeug.utils import secure_filename
+#from werkzeug.utils import secure_filename
 import magic
 import rules
 
@@ -30,12 +30,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
+# mine type validation for file upload, only text/plain and application/octet-stream are allowed
 def allowed_mime_type(file):
     mime = magic.Magic(mime=True)
     mime_type = mime.from_buffer(file.read(1024))
     file.seek(0)  # Reset the file pointer to the beginning
     return mime_type in {'text/plain', 'application/octet-stream'}
-#
 
 class Analyzer:
     def __init__(self):
@@ -94,7 +94,6 @@ class Analyzer:
 def clean_fortran_code(file):
     """
     Remove diretivas de pré-compilação, MPI e OpenMP de um código Fortran.
-    
     """
     #  
     fortran_code = file.read().decode("utf-8")
@@ -211,6 +210,9 @@ def download_report():
 def request_entity_too_large(error):
     return jsonify({"error": "File is too large. Maximum file size is 500 KB."}), 413
 
+# Security 
+# Adds HTTP security headers to the response to protect against
+# clickjacking and cross-site scripting (XSS) attacks.
 @app.after_request
 def set_secure_headers(response):
     response.headers['X-Frame-Options'] = 'DENY'

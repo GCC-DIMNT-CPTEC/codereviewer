@@ -36,6 +36,9 @@ def allowed_mime_type(file):
     file.seek(0)  # Reset the file pointer to the beginning
     return mime_type in {'text/plain', 'application/octet-stream'}
 #
+def remove_preprocessor_directives(source):
+    # Remove linhas que começam com #
+    return re.sub(r'^\s*#.*$', '', source, flags=re.MULTILINE)
 
 class Analyzer:
     def __init__(self):
@@ -148,6 +151,9 @@ def index():
         try:
             fortran_code = file.read().decode("utf-8")
             #fortran_code = clean_fortran_code(file)
+            # remove preprocessor directives
+            fortran_code = remove_preprocessor_directives(fortran_code)
+
         except Exception as e:
             return jsonify({"error": f"Error reading file: {str(e)}"}), 400
 
